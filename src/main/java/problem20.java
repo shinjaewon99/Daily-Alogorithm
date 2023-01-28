@@ -30,7 +30,7 @@ class Solution {
                 // 단어 첫글자 대문자로 변환
                 answer += sSplit[i].substring(0, 1).toUpperCase();
                 // 단어 첫글자를 제외하고 소문자로 변환
-                answer += sSplit[i].substring(1, sSplit.length).toLowerCase();
+                answer += sSplit[i].substring(1).toLowerCase();
 
                 answer += " ";
             }
