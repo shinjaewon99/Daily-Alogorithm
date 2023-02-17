@@ -53,6 +53,7 @@ public class problem93 {
                 total += number % 10;
                 number /= 10;
             }
+            System.out.println(total);
 
             // 예시에서 기존입력된 값 + 자릿수의 합이다.
             // total(자릿수 누적합) = 9  + 198
