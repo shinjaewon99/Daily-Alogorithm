@@ -25,28 +25,30 @@
 10
 
 */
-import java.util.*;
+
+import java.util.Scanner;
+
 public class problem204 {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
 
 
-        int [][] apt = new int[15][15];
+        int[][] apt = new int[15][15];
 
-        for(int i = 0; i < apt.length; i++){
+        for (int i = 0; i < apt.length; i++) {
             apt[i][1] = 1; // i층의 1호
             apt[0][i] = i; // 0층 i호
         }
-        for(int i = 1 ; i < apt.length; i++){
-            for(int j = 2; j < apt.length; j++){
+        for (int i = 1; i < apt.length; i++) {
+            for (int j = 2; j < apt.length; j++) {
                 // apt 배열을 층수와 호에따라 만들어 놓는다.
-                apt[i][j] = apt[i][j -1] + apt[i-1][j];
+                apt[i][j] = apt[i][j - 1] + apt[i - 1][j];
             }
         }
 
         int t = in.nextInt();
-        for(int i = 0; i < t; i++){
+        for (int i = 0; i < t; i++) {
             int n = in.nextInt(); // 층
             int m = in.nextInt(); // 호
 
@@ -55,4 +57,3 @@ public class problem204 {
 
     }
 }
-
