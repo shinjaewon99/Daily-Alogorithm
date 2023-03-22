@@ -30,7 +30,8 @@ public class problem227 {
             String st = in.next();
 
             // 첫번째 문자, 마지막 문자 출력
-            System.out.println(st.substring(0, 1) + st.substring(st.length() - 1, st.length()));
+            System.out.println(st.substring(0, 1)
+                    + st.substring(st.length() - 1, st.length()));
         }
     }
 }
