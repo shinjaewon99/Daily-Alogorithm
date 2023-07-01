@@ -77,12 +77,8 @@ public class problem498 {
             count++;
         }
 
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>(map.keySet());
 
-        for (Map.Entry<String, Integer> key : map.entrySet()) {
-            String keyString = key.getKey();
-            list.add(keyString);
-        }
 
         Collections.sort(list);
         StringBuilder output = new StringBuilder();
@@ -96,4 +92,5 @@ public class problem498 {
         System.out.println(output.toString());
     }
 }
+
 
