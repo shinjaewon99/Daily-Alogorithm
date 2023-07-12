@@ -34,6 +34,7 @@ public class Main {
                 System.out.println(i);
                 break;
             }
+            // 동시에 3개의 빙고를 찾기위해
             // 0으로 초기화 해주는 이유는 빙고 한개를 찾았을경우, 그 빙고의 갯수가 계속 누적되어 증가하게된다.
             count = 0;
         }
