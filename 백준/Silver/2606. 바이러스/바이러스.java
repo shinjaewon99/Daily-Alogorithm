@@ -1,49 +1,39 @@
 import java.util.Scanner;
 
 public class Main {
+    private static int com;
+    private static int connect;
+    private static int[][] graph;
+    private static boolean[] flag;
+    private static int count = 0;
 
-
-    static int n;
-    static int m;
-    static boolean [][] arr;
-    static boolean [] visit;
-    static int x;
-    static int y;
-    static int result;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        n = in.nextInt();
-        m = in.nextInt();
+        com = in.nextInt(); // 컴퓨터 갯수
+        connect = in.nextInt(); // 네트워크상 연결된 컴퓨터 쌍의 수
+        graph = new int[com + 1][com + 1]; // 노드가 1부터 시작하므로 맞춰서 배열 생성
+        flag = new boolean[com + 1];
 
-        // 배열 초기화 (n까지 인덱스)
-        arr = new boolean[n+1][n+1];
-        visit = new boolean[n+1];
-
-        for(int i = 0; i < m; i++){
-            x = in.nextInt();
-            y = in.nextInt();
-            // 네트워크상 연결되어있다.
-            arr[x][y] = arr[y][x] = true;
+        for (int i = 1; i <= connect; i++) {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            graph[x][y] = graph[y][x] = 1; // 연결된 네트워크 1로 할당
         }
 
-        // 1번 노드부터 시작함
-        DFS(1);
-        System.out.print(result - 1);
-
-
+        dfs(1); // 1번 노드부터 시작한다.
+        System.out.println(count);
     }
 
-    private static void DFS(int a){
-        result++;
-        visit[a] = true;
-        for(int i = 1; i <= n; i++) {
-            // 방문 하지 않았고, arr 배열의 값이 있을경우
-            if (!visit[i] && arr[a][i]){
-                DFS(i);
+    private static void dfs(int num){
+        flag[num] = true;
+
+        for (int i = 1; i <= com; i++) {
+            // 방문하지않고, 컴퓨터끼리 연결되어있는지 확인
+            if (!flag[i] && (graph[num][i] == 1)) {
+                dfs(i);
+                count++;
             }
         }
     }
-
-
 }
