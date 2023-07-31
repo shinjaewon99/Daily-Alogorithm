@@ -1,35 +1,35 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
-
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int size = in.nextInt();
 
+        // 1. 사람의 수 입력
+        int num = in.nextInt();
 
-        int[] arr = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            arr[i] = in.nextInt();
+        // 2. 각 사람이 주려고 하는 팁
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            list.add(in.nextInt());
         }
-        Arrays.sort(arr);
-        long sum = 0;
-        int index = 0;
-        int [] reverse = new int [arr.length];
 
-        // 최대값 저장을 위해 역순
-        for (int j = arr.length - 1; j >= 0; j--) {
-            reverse[index] = arr[j];
+        // 3. 강호가 받을수 있는 팁 최대값 구하기
+        list.sort(Collections.reverseOrder());
+        long result = 0;
+        int index = 0;
+        for (int i = 1; i <= num; i++) {
+            int temp = list.get(index) - (i - 1);
+
+            if (temp <= 0) {
+                temp = 0;
+            }
+            result += temp;
             index++;
         }
-        for(int k = 0; k < size; k++){
-            if(reverse[k] - k <= 0){
-                break;
-            }
-            sum += reverse[k] - k;
-        }
-        System.out.print(sum);
+        System.out.println(result);
+
     }
 }
