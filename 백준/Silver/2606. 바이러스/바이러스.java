@@ -1,36 +1,43 @@
 import java.util.Scanner;
 
 public class Main {
-    private static int com;
+    private static int computer;
     private static int connect;
-    private static int[][] graph;
     private static boolean[] flag;
-    private static int count = 0;
-
+    private static int[][] computers;
+    private static int count;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        com = in.nextInt(); // 컴퓨터 갯수
-        connect = in.nextInt(); // 네트워크상 연결된 컴퓨터 쌍의 수
-        graph = new int[com + 1][com + 1]; // 노드가 1부터 시작하므로 맞춰서 배열 생성
-        flag = new boolean[com + 1];
+        // 1. 컴퓨터의 수와 네트워크상 연결의수 입력
+        computer = in.nextInt();
+        connect = in.nextInt();
 
+
+        // 2. 배열 크기 지정
+        flag = new boolean[computer + 1];
+        computers = new int[computer + 1][computer + 1];
+
+        // 3. 배열 초기화
         for (int i = 1; i <= connect; i++) {
             int x = in.nextInt();
             int y = in.nextInt();
-            graph[x][y] = graph[y][x] = 1; // 연결된 네트워크 1로 할당
+            
+            computers[x][y] = computers[y][x] = 1; // 양방향 
         }
 
-        dfs(1); // 1번 노드부터 시작한다.
+
+        // 4. 1번 컴퓨터 부터 시작
+        dfs(1);
         System.out.println(count);
     }
 
-    private static void dfs(int num){
-        flag[num] = true;
+    // 5. 네트워크상 연결되어있으면서 방문하지 않은지 검증
+    private static void dfs(int number){
+        flag[number] = true;
 
-        for (int i = 1; i <= com; i++) {
-            // 방문하지않고, 컴퓨터끼리 연결되어있는지 확인
-            if (!flag[i] && (graph[num][i] == 1)) {
+        for (int i = 1; i <= computer ; i++) {
+            if(!flag[i] && (computers[number][i] == 1)){
                 dfs(i);
                 count++;
             }
