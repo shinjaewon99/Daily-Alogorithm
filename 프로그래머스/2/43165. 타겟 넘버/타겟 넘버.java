@@ -1,25 +1,22 @@
 class Solution {
-    private int answer = 0;
+    static int answer = 0;
     public int solution(int[] numbers, int target) {
         
-        dfs(numbers, 0, 0, target);
-        
+        // 1. dfs 메소드 호출
+        dfs(numbers, 0, 0 , target);
         return answer;
     }
     
-    private void dfs(int[] numbers, int depth, int sum, int target){
-        
-        // 1. numbers 배열의 길이만큼 탐색하면 연산이 끝남
-        if(numbers.length == depth){
-            if(sum == target){
+    private void dfs(int[] numbers, int depth, int sum, int target){   
+        // 2. 배열 numbers를 끝까지 탐색했을경우
+        if(depth == numbers.length){
+             // 3. 타겟 넘버와 같을경우
+            if(target == sum){
                 answer++;
             }
         }else{
-            // 2. 덧셈 재귀함수
             dfs(numbers, depth + 1, sum + numbers[depth], target);
-            
-            // 3. 뺄셈 재귀함수
             dfs(numbers, depth + 1, sum - numbers[depth], target);
-        }
+        }      
     }
 }
