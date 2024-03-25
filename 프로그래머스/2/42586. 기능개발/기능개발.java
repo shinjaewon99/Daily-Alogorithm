@@ -1,36 +1,43 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 class Solution {
-    public int[] solution(int[] progresses, int[] speeds) {
+	public int[] solution(int[] progresses, int[] speeds) {
+        List<Integer> store = new ArrayList<>();
+		int[] work = new int[progresses.length];
 
-        int[] work = new int[progresses.length];
-        for(int i = 0; i < progresses.length; i++){
-            work[i] = (100 - progresses[i]) / speeds[i]; // 걸리는 시간 
-            if((100 - progresses[i]) % speeds[i] != 0){
-                // speeds에 비해 남아있는 % 가 있을경우 하루를 더 계산한다.
-                work[i] += 1; 
-            }
-        }
-        // 7 7 9
-        List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < progresses.length; i++) {
+			// 1. 속도와 비교하여 잔여 일 수 구하기
+			work[i] = (100 - progresses[i]) / speeds[i];
+
+			// 2. 작업 진도가 남은 경우 일 수를 늘려야 함
+			if((100 - progresses[i]) % speeds[i] != 0){
+				work[i] += 1;
+			}
+		}
+        
+        // 3. 저장된 work 배열 비교
         int count = 1;
         int compare = work[0];
-        for(int i = 1; i < progresses.length; i++){
-
-            // 앞의 기능이 끝나기 전까지는 다음 기능을 완료할수없다.
+        for(int i = 1; i < work.length; i++){
             if(compare >= work[i]){
                 count++;
             }else{
-                list.add(count);
-                count = 1; // 초기화 
+                store.add(count);
                 compare = work[i];
+                count = 1;
             }
         }
-        list.add(count);
-        int[] answer = new int[list.size()];
-        for(int i = 0; i < list.size(); i++){
-            answer[i] = list.get(i);
+        
+        // 4. 마지막에 남아있는 배포 일
+        store.add(count);
+        
+        int[] answer = new int[store.size()];
+        
+        for(int i = 0; i < store.size(); i++){
+            answer[i] = store.get(i);
         }
-        return answer;
-    }
+
+		return answer;
+	}
 }
