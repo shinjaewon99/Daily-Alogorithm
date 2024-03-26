@@ -1,29 +1,30 @@
+
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.PriorityQueue;
-
 class Solution {
-    public int solution(int[] scoville, int K) {
-        int answer = 0;
+	public int solution(int[] scoville, int K) {
 
-        // 1. 우선순위 큐 선언, 최소 값 추출
-        Queue<Integer> queue = new PriorityQueue<>();
+		Queue<Integer> store = new PriorityQueue<>();
+        
+        // 1. 우선순위 큐에 모든 원소 추가
+		Arrays.stream(scoville).forEach(store::add);
 
-        for(int i : scoville){
-            queue.add(i);
-        }
-        
-        while(queue.peek() < K){
+		int answer = 0;
+   
+		while(store.peek() < K){
+			if(store.size() == 1){
+				return -1;
+			}
             
-            // 2. 스코빌 지수를 K이상으로 만들수 없는 경우는 남아있는 수가 1개일경우
-            if(queue.size() == 1){
-                return -1;
-            }
-            
-            queue.add(queue.poll() + (queue.poll() * 2));
-            answer++;
-        }
-        
-      
+            // 2. 음식을 섞기위해 원소 추출
+			int first = store.poll();
+			int second = store.poll();
+
+			store.add(first + (second * 2));
+			answer++;
+		}
+
         return answer;
-    }
+	}
 }
