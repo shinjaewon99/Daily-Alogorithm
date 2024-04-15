@@ -1,21 +1,27 @@
 import java.util.Arrays;
 
 class Solution {
-	public int[] solution(int[] array, int[][] commands) {
-		int[] answer = new int[commands.length];
-
-		for (int i = 0; i < commands.length; i++) {
-			int a = commands[i][0]; // 2
-			int b = commands[i][1]; // 5
-			int c = commands[i][2]; // 3
-
-            // array 라는 배열을 a - 1 인덱스 부터 b 인덱스 까지 복사
-			int[] copyArray = Arrays.copyOfRange(array, a - 1, b);
-			Arrays.sort(copyArray);
-
-			answer[i] = copyArray[c - 1];
-		}
-
-		return answer;
-	}
+    public int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        
+        for(int i = 0; i < commands.length; i++){
+            // 1. ~번째 부터 ~까지 자르는 수
+            int first = commands[i][0];
+            int second = commands[i][1];
+            
+            // 2. 몇번째 숫자를 추출할지
+            int third = commands[i][2];
+            
+            int[] store = new int[second - first + 1];
+            
+            // 3. store 배열에 값 할당
+            for(int j = first; j <= second; j++){     
+                store[j - first] = array[j - 1];
+            }
+            Arrays.sort(store);
+            
+            answer[i] = store[third - 1];
+        }
+        return answer;
+    }
 }
