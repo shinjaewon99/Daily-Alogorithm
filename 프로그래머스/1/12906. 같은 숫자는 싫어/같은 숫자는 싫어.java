@@ -1,20 +1,25 @@
 import java.util.*;
 
 public class Solution {
-	public int[] solution(int []arr) {
-		
-		Stack<Integer> store = new Stack<>();
+    public int[] solution(int []arr) {
+      
+        
+        List<Integer> store = new ArrayList<>();
+        
+        store.add(arr[0]);
+        
+        for(int i = 1; i < arr.length; i++){
+            if(arr[i - 1] != arr[i]){
+                store.add(arr[i]);
+            }
+        }
 
-		Arrays.stream(arr)
-				.filter(i -> store.isEmpty() || store.peek() != i)
-				.forEach(store::push);
+        int[] answer = new int[store.size()];
         
-		int[] answer = new int[store.size()];
-        
-        // 1. stack은 FILO 이므로 뒤에서 부터 꺼내야된다.
-		for (int i = store.size() - 1; i >= 0; i--) {
-			answer[i] = store.pop();
-		}
-		return answer;
-	}
+        for(int i = 0; i < store.size(); i++){
+            answer[i] = store.get(i);
+        }
+
+        return answer;
+    }
 }
