@@ -1,21 +1,23 @@
 import java.util.Set;
 import java.util.HashSet;
+
 class Solution {
-    public int solution(int[] nums) {        
-        // 1. N 마리의 포켓몬중 최소한의 조건인 N/2
-        int getPoket = nums.length / 2;
+    public int solution(int[] nums) {
+        int answer = 0;
+        int chooseNum = nums.length / 2;
         
-        // 2. 중복을 제거하기 위한 Set 객체 선언
         Set<Integer> store = new HashSet<>();
         
-        for(int num : nums){
-            store.add(num);
+        for(int i = 0; i < nums.length; i++){
+            store.add(nums[i]);
         }
         
-        if(getPoket > store.size()){
-            return store.size();
+        // 최대로 가져갈 수 있는 폰켓몬 수 계산
+        if(chooseNum < store.size()){
+            return chooseNum;
         }
         
-        return getPoket;
+        
+        return store.size();
     }
 }
