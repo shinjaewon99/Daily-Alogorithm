@@ -1,32 +1,25 @@
 class Solution {
     public int solution(String[] babbling) {
         int answer = 0;
-        
-        // 1. 중복 되지 않는 문자열
-        String[] compare = {"aya", "ye", "woo", "ma"};
-        
-        // 2. 중복 된 문자열
+        int length = babbling.length;
+        String[] speak = {"aya", "ye", "woo", "ma"};
         String[] duplicate = {"ayaaya", "yeye", "woowoo", "mama"};
         
-        // 3. 중복 문자열 찾기
-        for(int i = 0; i < babbling.length; i++){
-            for(int j = 0; j < compare.length; j++){
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < speak.length; j++){
                 babbling[i] = babbling[i].replace(duplicate[j], "1");
             }
         }
         
-        // 4. 발음 할 수 있는 문자열 찾기
-        for(int i = 0; i < babbling.length; i++){
-            for(int j = 0; j < compare.length; j++){
-                babbling[i] = babbling[i].replace(compare[j], " ");
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < speak.length; j++){
+                babbling[i] = babbling[i].replace(speak[j], " ");
             }
-            
-            babbling[i] = babbling[i].replace(" ", "");
+             babbling[i] = babbling[i].replace(" ", "");
         }
         
-        // 5. 발음 할 수 있는 문자열 계산
-        for(int i = 0; i < babbling.length; i++){
-            if(babbling[i].equals("")) answer++;
+        for(String babb : babbling){
+            if(babb.equals("")) answer++;
         }
         
         return answer;
