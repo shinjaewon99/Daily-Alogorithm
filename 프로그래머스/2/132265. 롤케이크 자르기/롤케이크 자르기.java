@@ -1,33 +1,39 @@
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
 class Solution {
     public int solution(int[] topping) {
         int answer = 0;
+    
+        Map<Integer, Integer> totalTopping = new HashMap<>();
         
-        Map<Integer, Integer> store1 = new HashMap<>(); // 형
-        Map<Integer, Integer> store2 = new HashMap<>(); // 동생
         
-        // 1. 동생 Map 객체에 토핑의 번호의 갯수를 저장한다.
-        for(int number : topping){
-            store2.put(number, store2.getOrDefault(number, 0) + 1);
+        for(int lol : topping){
+            totalTopping.put(lol, totalTopping.getOrDefault(lol, 0) + 1);
         }
         
-        for(int number : topping){
-            // 2. 토핑을 하나씩 저장 한다.
-            store1.put(number, store1.getOrDefault(number, 0) + 1);
+        
+        Map<Integer, Integer> leftTopping = new HashMap<>();
+        Map<Integer, Integer> rightTopping = new HashMap<>(totalTopping);
+        
+        for(int lol : topping){
+            // 왼쪽에 토핑을 하나씩 담는다.
+            leftTopping.put(lol, leftTopping.getOrDefault(lol, 0) + 1);
             
-            // 3. 자르는 기준
-            if(store2.get(number) - 1 == 0){
-                store2.remove(number);
-            }else{
-                store2.put(number, store2.get(number) - 1);
+            // 오른쪽에 토핑을 하나씩 제거한다.
+            rightTopping.put(lol, rightTopping.get(lol) - 1);
+            
+            if(rightTopping.get(lol) == 0){
+                rightTopping.remove(lol);
             }
             
-            if(store1.size() == store2.size()){
+            if(leftTopping.size() == rightTopping.size()){
                 answer++;
             }
         }
+        
         
         return answer;
     }
