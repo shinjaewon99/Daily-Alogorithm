@@ -2,9 +2,8 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
-      
         
-        List<Integer> store = new ArrayList<>();
+        Stack<Integer> store = new Stack<>();
         
         store.add(arr[0]);
         
@@ -13,13 +12,13 @@ public class Solution {
                 store.add(arr[i]);
             }
         }
-
+        
         int[] answer = new int[store.size()];
         
         for(int i = 0; i < store.size(); i++){
             answer[i] = store.get(i);
         }
-
+        
         return answer;
     }
 }
