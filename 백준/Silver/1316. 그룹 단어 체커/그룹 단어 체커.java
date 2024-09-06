@@ -1,55 +1,38 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner in = new Scanner(System.in);
 
-        int size = in.nextInt();
-
+        int number = in.nextInt();
+        in.nextLine();
         int count = 0;
-        for (int i = 0; i < size; i++) {
-            String st = in.next();
-            boolean check = check(st);
-            if(check == true){
-                count++;
-            }
+        
+        for(int i = 0; i < number; i++){
+            String word = in.nextLine();
+
+            if(check(word)) count++;
         }
+
         System.out.println(count);
     }
+    
+    private static boolean check(String word) {
+        boolean[] store = new boolean[26]; // 논리 배열의 초기값은 false
 
-    static boolean check(String st) {
-        // 알파벳 배열 선언
-        boolean [] arr = new boolean [26];
-        int temp = 0;
+        // 연속된 문자인지 판단
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
 
-
-        for (int i = 0; i < st.length(); i++) {
-            // 현재 문자의 아스키코드값
-            int now = st.charAt(i);
-
-            /**
-             * aaba 값이 입력 되었을때
-             * a는 temp의 값이랑 달라 if문에 걸려 들어간다
-             * 다음 a는 temp랑 now의 값이 같음으로 걸러들어가지않는다.
-              */
-
-            if(temp != now){
-                // 해당 문자가 처음 등장한 경우 (false인경우), boolean 타입은 초기 설정값이 false이다.
-                if(arr[now - 'a'] == false){
-                    // 해당 문자가 처음 등장한경우 true로 변경해준다
-                    arr[now - 'a'] = true;
-                    temp = now;
-                }
-                // 해당 문자가 처음 등장하지 않은 경우
-                else{
+            if(store[ch - 'a']){
+                // 연속되지 않은 문자열 일경우
+                if(ch != word.charAt(i - 1)){
                     return false;
                 }
+            }else {
+                store[ch - 'a'] = true;
             }
-
         }
         return true;
     }
 }
-
-
