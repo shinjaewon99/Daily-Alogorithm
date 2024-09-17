@@ -1,28 +1,29 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // 1. 돌 갯수 입력
-        int stoneNumber = in.nextInt();
+        int number = in.nextInt();
 
-        // 2. 요구사항에 맞게 배열 크기 할당 및 dp 배열 값 할당
-        // 상근이 이기는경우를 1, 창영이가 이기는 경우를 2로 지정
+        // SK가 이기는 경우를 1, CY가 이기는경우를 2
         int[] dp = new int[1001];
-        dp[1] = 1;
+        dp[1] = 1; // 돌이 1개일 경우
         dp[2] = 2;
         dp[3] = 1;
 
-        // 3. 마지막 돌을 가져가는 사람 검증
-        for (int i = 4; i <= stoneNumber; i++) {
-            dp[i] = Math.min(dp[i - 3], dp[i - 1]) + 1;
+        // 돌의 갯수가 4 이상일때
+        // 1, 3 
+        // 3, 1
+        // 1, 1, 1, 1
+        for(int i = 4; i <= number; i++){
+            dp[i] = Math.min(dp[i - 1], dp[i - 3]) + 1; 
         }
 
-        if (dp[stoneNumber] % 2 == 0) {
+        if(dp[number] % 2 == 0){
             System.out.println("CY");
         }else{
-            System.out.println("SK");
+             System.out.println("SK");
         }
     }
 }
