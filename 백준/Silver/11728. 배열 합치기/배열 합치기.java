@@ -1,52 +1,61 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt(); // 배열 A의 크기
-        int m = in.nextInt(); // 배열 B의 크기
-        int[] nArr = new int[n];
-        int[] mArr = new int[m];
+        st = new StringTokenizer(in.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
+        int[] storeA = new int[n];
+        int[] storeB = new int[m];
+
+        st = new StringTokenizer(in.readLine());
         for (int i = 0; i < n; i++) {
-            nArr[i] = in.nextInt();
+            storeA[i] = Integer.parseInt(st.nextToken());
         }
-
+        
+        st = new StringTokenizer(in.readLine());
         for (int i = 0; i < m; i++) {
-            mArr[i] = in.nextInt();
+            storeB[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 투 포인터 선언
-        int start = 0; // 시작 포인터
-        int end = 0; // 끝 포인터
-        StringBuilder output = new StringBuilder();
+        int[] result = new int[n + m];
+        
+        // 투포인터 선언
+        int i = 0;
+        int j = 0;
+        int k = 0;
 
-
-        while (true) {
-            // mArr 배열의 값이 더 크거나 같을경우 시작 포인터 증가
-            if (nArr[start] <= mArr[end]) {
-                output.append(nArr[start] + " ");
-                start++;
-            }
-            // nArr 배열의 값이 더 클경우 끝 포인터 증가
-            else {
-                output.append(mArr[end] + " ");
-                end++;
-            }
-            if (start == n || end == m) break;
-        }
-
-        if (start == n) {
-            for (int i = end; i < m; i++) {
-                output.append(mArr[i] + " ");
+        while(i < n && j < m){
+            if(storeA[i] <= storeB[j]){
+                result[k++] = storeA[i++]; 
+            }else{
+                result[k++] = storeB[j++];
             }
         }
 
-        if (end == m) {
-            for (int i = start; i < n; i++) {
-                output.append(nArr[i] + " ");
-            }
+        // 남은 요소 처리
+        while(i < n){
+            result[k++] = storeA[i++];
         }
-        System.out.println(output.toString());
+
+        while(j < m){
+            result[k++] = storeB[j++];
+        }
+
+        // 마지막 숫자뒤에 공백을 제거하기위한 StringBuilder
+        StringBuilder sb = new StringBuilder();
+        for (int idx = 0; idx < result.length; idx++) {
+            if (idx > 0) {
+                sb.append(" ");
+            }
+            sb.append(result[idx]);
+        }
+        out.write(sb.toString());
+        out.flush();
     }
 }
