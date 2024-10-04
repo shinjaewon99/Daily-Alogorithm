@@ -1,10 +1,11 @@
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 class Solution {
     public String solution(String[] survey, int[] choices) {
+        String answer = "";
         Map<Character, Integer> store = new HashMap<>();
-        // 1. 초기화
+        
+        // 초기화
         store.put('R', 0);
         store.put('T', 0);
         store.put('C', 0);
@@ -14,50 +15,50 @@ class Solution {
         store.put('A', 0);
         store.put('N', 0);
         
-        for(int i = 0; i < choices.length; i++){
-            // 2. 성격유형 문자 반환
-            char type1 = survey[i].charAt(0);
-            char type2 = survey[i].charAt(1);
+        for(int i = 0; i < survey.length; i++){
+            char key1 = survey[i].charAt(0);
+            char key2 = survey[i].charAt(1);
             
-            // 3. 점수가 4점 보다 클 경우
-            if(choices[i] > 4){
-                store.put(type2, store.get(type2) + (choices[i] - 4));
-            }else if(choices[i] < 4){
-                store.put(type1, store.get(type1) + (4 - choices[i]));
+            if(choices[i] > 4) {
+                store.put(key2, store.get(key2) + (choices[i] - 4));
+            }else if (choices[i] < 4){
+                store.put(key1, store.get(key1) + (4 - choices[i]));
             }
         }
-        String answer = sortAnswer(store);
+        
+        answer = answerSorting(store);
+        
         return answer;
     }
     
-    private String sortAnswer(Map<Character, Integer> store){
-        StringBuilder answer = new StringBuilder();
+    // 점수에 따른 정렬
+    private String answerSorting(final Map<Character, Integer> store) {
+        StringBuilder output = new StringBuilder();
         
-        // 4. 번호 순서대로 임으로, 비교하여 answer 변수에 저장
         if(store.get('R') >= store.get('T')){
-            answer.append('R');
+            output.append('R');
         }else{
-            answer.append('T');
+            output.append('T');
         }
         
         if(store.get('C') >= store.get('F')){
-            answer.append('C');
+            output.append('C');
         }else{
-            answer.append('F');
+            output.append('F');
         }
         
         if(store.get('J') >= store.get('M')){
-            answer.append('J');
+            output.append('J');
         }else{
-            answer.append('M');
+            output.append('M');
         }
         
         if(store.get('A') >= store.get('N')){
-            answer.append('A');
+            output.append('A');
         }else{
-            answer.append('N');
+            output.append('N');
         }
-         
-        return answer.toString();
+        
+        return output.toString();
     }
 }
