@@ -1,49 +1,47 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        while (true) {
-            String words = in.nextLine();
+        StringBuilder result = new StringBuilder();
+        while(true){
 
-            if (words.equals(".")) break;
+            String word = in.nextLine();
+            if(word.equals(".")) break;
 
-            System.out.println(answer(words));
+            if(checkBalance(word)){
+                result.append("yes").append("\n");
+            }else{
+                result.append("no").append("\n");
+            }
+            
         }
+
+        System.out.println(result.toString());
     }
 
-    private static String answer(String words) {
+    private static boolean checkBalance(final String word){
         Stack<Character> store = new Stack<>();
 
-        for (char word : words.toCharArray()) {
-            // 1. 여는 괄호 일경우
-            if (word == '(' || word == '[') {
-                store.push(word);
-            }
+        for(char ch : word.toCharArray()){
 
-            // 2. 닫는 괄호 일경우
-            else if (word == ')') {
-                if (store.isEmpty() || store.peek() != '(') {
-                    return "no";
-                } else {
-                    store.pop();
+            // 여는 괄호 일경우
+            if(ch == '(' || ch == '['){
+                store.push(ch);
+            }
+            // 닫는 괄호 일 경우
+            else if(ch == ')'){
+                if(store.isEmpty() || store.pop() != '('){
+                    return false; // 짝이 맞지 않을 경우
                 }
-            } else if (word == ']') {
-                if (store.isEmpty() || store.peek() != '[') {
-                    return "no";
-                } else {
-                    store.pop();
+            }else if(ch == ']'){
+                if(store.isEmpty() || store.pop() != '['){
+                    return false; // 짝이 맞지 않을 경우
                 }
             }
         }
 
-        // 3. stack 객체가 비어있다는것은 괄호가 다 짝을 이룬것 or 괄호가 처음부터 없는 문자열
-        if (store.isEmpty()) {
-            return "yes";
-        } else {
-            return "no";
-        }
+        return store.isEmpty();
     }
 }
