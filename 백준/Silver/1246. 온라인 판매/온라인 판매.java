@@ -1,45 +1,29 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // 1. 총달걀 입력
-        int egg = in.nextInt();
+        int n = in.nextInt(); // 달걀의 갯수
+        int m = in.nextInt(); // 잠재적인 고객
+        int[] peple = new int[m];
 
-        // 2. 고객 입력
-        int people = in.nextInt();
-
-        List<Integer> store = new ArrayList<>();
-
-        for (int i = 0; i < people; i++) {
-            store.add(in.nextInt());
+        for(int i = 0; i < m; i++){
+            peple[i] = in.nextInt();
         }
 
-        Collections.sort(store);
+        Arrays.sort(peple);
 
+        int max = Integer.MIN_VALUE;
         int price = 0;
-        int max = 0;
-        // 2 7 8 10
-        for (int i = 0; i < people; i++) {
-            int number = store.get(i);
-            int total = 0;
-
-            // 3. 총 달걀이 구매 고객 보다 큰경우, 똑같은 고객에게 2개이상 팔지 않음으로 people - i를 해준다.
-            if (egg > people - i) {
-                total = number * (people - i);
-            }
-            // 4. 구매 고객이 총 달걀 갯수 보다 많을경우 달걀을 다 팔아야함
-            else {
-                total = number * egg;
-            }
-
-            if (total > max) {
-                max = total;
-                price = number;
+        for(int i = 0; i < m; i++){
+            int currentPrice = peple[i];
+            int purchase = Math.min(m - i, n); // 현재 가격에서 달걀을 살수 있는 고객을 구함
+            int currentMax = currentPrice * purchase;
+            
+            if(currentMax > max){
+                max = currentMax;
+                price = currentPrice;
             }
         }
 
