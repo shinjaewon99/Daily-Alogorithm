@@ -1,32 +1,33 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+class Main {
+    private static int[] dp;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // 1. 테스트 갯수 입력
-        int testSize = in.nextInt();
-        int[] numbers = new int[testSize];
-        int[] dp = new int[12];
+        int t = in.nextInt();
+        dp = new int[11];
+        int[] store = new int[t];
 
-        dp[1] = 1; // 1
-        dp[2] = 2; // 11, 2
-        dp[3] = 4; // 111, 12, 21, 3
-
-        // dp[4] = (1+1+1+1), (1+1+2), (1+2+1), (1+3), (2+1+1), (2+2), (3+1)
-        // dp[4] = dp[3] + dp[2] + dp[1]
-        // 1로 시작하는 식은 dp[3] 
-        // 2로 시작하는 식은 dp[2] 
-        // 3으로 시작하는 식은 dp[1]
-
-        // 2. 테스트 갯수만큼 정수 입력
-        for (int i = 0; i < testSize; i++) {
-            numbers[i] = in.nextInt();
-
-            for (int j = 4; j <= numbers[i]; j++) {
-                dp[j] = dp[j - 1] + dp[j - 2] + dp[j - 3];
-            }
-            System.out.println(dp[numbers[i]]);
+        for(int i = 0; i < t; i++){
+            store[i] = in.nextInt();
         }
+
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 4;
+
+        for(int i = 0; i < t; i++){
+            System.out.println(calcu(store[i]));
+        }
+    }
+
+    private static int calcu(final int number){
+
+        for(int i = 4; i <= number; i++){
+            dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1];
+        }
+
+        return dp[number];
     }
 }
