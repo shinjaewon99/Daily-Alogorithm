@@ -1,33 +1,33 @@
-import java.util.*;
+import java.util.Scanner;
+
 public class Main {
-
-
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int size = in.nextInt();
-        long [] n = new long [size - 1];
-        long [] m = new long [size];
-        int count = 0;
-        for(int i = 0; i < n.length; i++){
-            n[i] = in.nextInt(); // 거리
+        int size = in.nextInt(); // 도시의 갯수
+
+        long[] arr = new long[size - 1];
+        long[] fill = new long[size];
+
+
+        for (int i = 0; i < size - 1; i++) {
+            arr[i] = in.nextLong();
         }
 
-        for(int i = 0; i < m.length; i++){
-            m[i] = in.nextInt(); // 가격
+        for (int i = 0; i < size; i++) {
+            fill[i] = in.nextLong();
         }
 
+        long min = fill[0]; // 기름의 최소값
+        long sum = 0; // 누적합
+        // 10 4 4
+        for (int i = 0; i < size - 1; i++) {
 
-        // 주유 최소 비용을 담는다.
-        long min = m[0];
-
-        for(int i = 0; i < n.length; i++){
-
-            // 현재 주유 가격 보다, 다음의 주유 가격이 더 쌀 경우 min 갱신
-            if(m[i] < min){
-                min = m[i];
+            if(fill[i] < min){
+                min = fill[i];
             }
-            count += min * n[i];
+
+            sum += min * arr[i];
         }
-        System.out.print(count);
+        System.out.println(sum);
     }
 }
