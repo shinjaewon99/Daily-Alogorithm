@@ -1,39 +1,37 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
+
         Scanner in = new Scanner(System.in);
 
-        // 1. 수열의 크기 입력
-        int numberSize = in.nextInt();
-        int[] numbers = new int[numberSize + 1];
-        int[] dp = new int[numberSize + 1];
+        int size = in.nextInt();
+        int[] store = new int[size + 1];
+        int[] dp = new int[size + 1];
 
-        // 2. 수열의 크기에따른 정수 입력
-        for (int i = 1; i <= numberSize; i++) {
-            numbers[i] = in.nextInt();
+        for(int i = 1; i <= size; i++){
+            store[i] = in.nextInt();
+
+            // dp의 최소값은 1
+            dp[i] = 1;
         }
 
-        // numbers : 10 20 10 30 20 50
-        // dp : 1 2 1 3 2 4
-        dp[1] = 1;
+        // 최소 길이는 1
+        int max = 1;
 
-        // 3. dp 배열 값 할당
-        for (int i = 1; i <= numberSize; i++) {
-            dp[i] = 1;
-            for (int j = 1; j <= i; j++) {
-                if(numbers[j] < numbers[i] && dp[i] <= dp[j]){
-                    dp[i] = dp[j] + 1; // dp 배열중 가장 큰 값에 + 1
+        // 10, 20, 10, 30, 20, 50
+        for(int i = 1; i <= size; i++){
+            for(int j = 1; j < i; j++){
+
+                // 이전 배열과 비교해서 다음 배열 값이 큰 경우
+                if(store[i] > store[j]){
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-        }
 
-        // 4. 최대 길이 출력
-        int max = 0;
-        for (int compare : dp) {
-            max = Math.max(compare, max);
+            max = Math.max(max, dp[i]);
         }
-
+        
         System.out.println(max);
     }
 }
