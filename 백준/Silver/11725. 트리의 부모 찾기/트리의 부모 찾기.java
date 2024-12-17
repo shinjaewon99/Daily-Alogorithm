@@ -1,50 +1,48 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+class Main {
     private static int n;
+    private static List<Integer>[] store;
     private static int[] graph;
-    private static boolean[] flag;
-    private static ArrayList<Integer>[] list;
-
+    private static boolean[] visit;
+    
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        // 노드의 갯수
-        n = in.nextInt();
-        graph = new int[n + 1]; // 노드 번호가 1번부터 시작함으로
-        flag = new boolean[n + 1];
-        list = new ArrayList[n + 1]; // list 객체를 n + 1 개 생성
+        n = in.nextInt(); // 노드의 갯수
+        store = new ArrayList[n + 1];
+        graph = new int[n + 1];
+        visit = new boolean[n + 1];
 
-        // 새로운 list 객체 생성 주입
-        for (int i = 1; i <= n; i++) {
-            list[i] = new ArrayList<>();
+        for(int i = 1; i <= n; i++){
+            store[i] = new ArrayList<>();
         }
 
-
-        for (int i = 1; i < n; i++) {
+        for(int i = 0; i < n - 1; i++){
             int x = in.nextInt();
             int y = in.nextInt();
 
-            // 같은 줄에 있는 노드 값 list에 저장
-            list[x].add(y);
-            list[y].add(x);
+            // 양방향으로 처리
+            store[x].add(y);
+            store[y].add(x);
         }
-        // 문제에서 1번 노드는 최상위 부모 노드, 1번 부터 시작
+
+        // 루트 노드인 1부터 시작
         dfs(1);
 
-        for (int i = 2; i <= n; i++) {
-            System.out.println(graph[i]);
-        }
+        for(int i = 2; i <= n; i++){
+            System.out.println(graph[i]);    
+        }        
     }
 
-    private static void dfs(int num) {
-        flag[num] = true; // 방문 체크
+    private static void dfs(final int depth) {
+        visit[depth] = true; // 방문처리
 
-        for (int find : list[num]) {
-            if (!flag[find]) {
-                graph[find] = num;
-                dfs(find);
+        for(int next : store[depth]){ // 현재 노드와 연결되 노드 찾기
+            if(!visit[next]){
+                graph[next] = depth;
+
+                dfs(next);
             }
         }
     }
