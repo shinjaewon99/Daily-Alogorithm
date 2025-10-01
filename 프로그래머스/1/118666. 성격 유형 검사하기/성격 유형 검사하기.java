@@ -1,8 +1,9 @@
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 class Solution {
     public String solution(String[] survey, int[] choices) {
-        String answer = "";
+        int length = survey.length;
         Map<Character, Integer> store = new HashMap<>();
         
         // 초기화
@@ -15,24 +16,22 @@ class Solution {
         store.put('A', 0);
         store.put('N', 0);
         
-        for(int i = 0; i < survey.length; i++){
+        for(int i = 0; i < length; i++){
             char key1 = survey[i].charAt(0);
             char key2 = survey[i].charAt(1);
             
             if(choices[i] > 4) {
-                store.put(key2, store.get(key2) + (choices[i] - 4));
+                store.put(key2, store.get(key2) + choices[i] - 4);
             }else if (choices[i] < 4){
                 store.put(key1, store.get(key1) + (4 - choices[i]));
             }
         }
         
-        answer = answerSorting(store);
-        
-        return answer;
+        String result = getResult(store);
+        return result;
     }
     
-    // 점수에 따른 정렬
-    private String answerSorting(final Map<Character, Integer> store) {
+    private String getResult(Map<Character, Integer> store) {
         StringBuilder output = new StringBuilder();
         
         if(store.get('R') >= store.get('T')){
