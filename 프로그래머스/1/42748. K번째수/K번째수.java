@@ -1,27 +1,25 @@
-import java.util.Arrays;
-
+import java.util.*;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
-        int[] answer = new int[commands.length];
+        int length = commands.length;
+        int[] answer = new int[length];
         
-        for(int i = 0; i < commands.length; i++){
-            // 1. ~번째 부터 ~까지 자르는 수
-            int first = commands[i][0];
-            int second = commands[i][1];
+        for(int i = 0; i < length; i++){
+            int a = commands[i][0];
+            int b = commands[i][1];
+            int c = commands[i][2];
             
-            // 2. 몇번째 숫자를 추출할지
-            int third = commands[i][2];
+            List<Integer> store = new ArrayList<>();
             
-            int[] store = new int[second - first + 1];
-            
-            // 3. store 배열에 값 할당
-            for(int j = first; j <= second; j++){     
-                store[j - first] = array[j - 1];
+            for(int j = a - 1; j < b; j++){
+                store.add(array[j]);
             }
-            Arrays.sort(store);
             
-            answer[i] = store[third - 1];
+            Collections.sort(store);
+            
+            answer[i] = store.get(c - 1); 
         }
+        
         return answer;
     }
 }
